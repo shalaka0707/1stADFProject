@@ -2,8 +2,6 @@
 	"name": "ADFTrial1204",
 	"location": "eastus",
 	"identity": {
-		"type": "SystemAssigned",
-		"principalId": "755c88ff-37a2-42a2-90bf-6cd088552416",
-		"tenantId": "fa0b48b8-cb0d-473c-b695-3862b55f9da9"
+		
 	}
 }
