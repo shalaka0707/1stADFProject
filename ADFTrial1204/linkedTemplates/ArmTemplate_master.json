@@ -1,0 +1,172 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ADFTrial1204"
+		},
+		"linkedservice_trial_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linkedservice_trial'"
+		},
+		"lnADLS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'lnADLS'"
+		},
+		"lnAzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'lnAzureDatabricks1'"
+		},
+		"lnAzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'lnAzureSqlDatabase1'"
+		},
+		"lnSqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'lnSqlServer1'"
+		},
+		"lnSqlServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'lnSqlServer1'"
+		},
+		"lnADLS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saccount4adls.dfs.core.windows.net"
+		},
+		"lnSqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "DESKTOP-THBSGPC\\Family"
+		},
+		"tg_newFiletoBlob_properties_pl_testVariable_parameters_FileName": {
+			"type": "string",
+			"defaultValue": "@triggerBody().Filename"
+		},
+		"tg_newFiletoBlob_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/d31d381c-9e65-46da-92b7-da569278c903/resourceGroups/TrialStorageAccount/providers/Microsoft.Storage/storageAccounts/storageacct1204"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ADFTrial1204_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"linkedservice_trial_connectionString": {
+						"value": "[parameters('linkedservice_trial_connectionString')]"
+					},
+					"lnADLS_accountKey": {
+						"value": "[parameters('lnADLS_accountKey')]"
+					},
+					"lnAzureDatabricks1_accessToken": {
+						"value": "[parameters('lnAzureDatabricks1_accessToken')]"
+					},
+					"lnAzureSqlDatabase1_connectionString": {
+						"value": "[parameters('lnAzureSqlDatabase1_connectionString')]"
+					},
+					"lnADLS_properties_typeProperties_url": {
+						"value": "[parameters('lnADLS_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "ADFTrial1204_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"lnSqlServer1_connectionString": {
+						"value": "[parameters('lnSqlServer1_connectionString')]"
+					},
+					"lnSqlServer1_password": {
+						"value": "[parameters('lnSqlServer1_password')]"
+					},
+					"lnSqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('lnSqlServer1_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ADFTrial1204_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "ADFTrial1204_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ADFTrial1204_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "ADFTrial1204_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"tg_newFiletoBlob_properties_pl_testVariable_parameters_FileName": {
+						"value": "[parameters('tg_newFiletoBlob_properties_pl_testVariable_parameters_FileName')]"
+					},
+					"tg_newFiletoBlob_properties_typeProperties_scope": {
+						"value": "[parameters('tg_newFiletoBlob_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ADFTrial1204_ArmTemplate_2')]"
+			]
+		}
+	]
+}

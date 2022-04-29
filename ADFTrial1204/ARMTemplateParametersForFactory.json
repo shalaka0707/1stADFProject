@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADFTrial1204"
+		},
+		"linkedservice_trial_connectionString": {
+			"value": ""
+		},
+		"lnADLS_accountKey": {
+			"value": ""
+		},
+		"lnAzureDatabricks1_accessToken": {
+			"value": ""
+		},
+		"lnAzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"lnSqlServer1_connectionString": {
+			"value": ""
+		},
+		"lnSqlServer1_password": {
+			"value": ""
+		},
+		"lnADLS_properties_typeProperties_url": {
+			"value": "https://saccount4adls.dfs.core.windows.net"
+		},
+		"lnSqlServer1_properties_typeProperties_userName": {
+			"value": "DESKTOP-THBSGPC\\Family"
+		},
+		"tg_newFiletoBlob_properties_pl_testVariable_parameters_FileName": {
+			"value": "@triggerBody().Filename"
+		},
+		"tg_newFiletoBlob_properties_typeProperties_scope": {
+			"value": "/subscriptions/d31d381c-9e65-46da-92b7-da569278c903/resourceGroups/TrialStorageAccount/providers/Microsoft.Storage/storageAccounts/storageacct1204"
+		}
+	}
+}
