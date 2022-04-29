@@ -1,0 +1,40 @@
+{
+	"name": "dsGoodtable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lnAzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SrNo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SaleDate",
+				"type": "date"
+			},
+			{
+				"name": "ProductNam",
+				"type": "varchar"
+			},
+			{
+				"name": "Qty",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FileName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tblSalesDataGood"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

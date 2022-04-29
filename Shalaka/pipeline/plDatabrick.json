@@ -1,0 +1,76 @@
+{
+	"name": "plDatabrick",
+	"properties": {
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/shalaka.shikalgar@outlook.com/#1workingWithExcel",
+					"baseParameters": {
+						"inputData": {
+							"value": "@concat('https://storageacct1204.blob.core.windows.net/adftrial/input/fromblobstoragemyexcel.xlsx','sp=r&st=2022-04-19T22:56:18Z&se=2022-04-20T06:56:18Z&spr=https&sv=2020-08-04&sr=b&sig=zbRbGmT%2BMBOMD6okWZ%2FQ%2BJWoAvtZft0cpuBJAZwHrbo%3D')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "lnAzureDatabricks1",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Notebook1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Notebook1').output.runOutput",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "SheetName",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "sheetName",
+								"value": {
+									"value": "@item()",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"sheetName": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-04-19T23:33:09Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,107 @@
+{
+	"name": "EmpWithDepatName",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dsEmployeeCSV",
+						"type": "DatasetReference"
+					},
+					"name": "EmployeeCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "dsDepartmentCsv",
+						"type": "DatasetReference"
+					},
+					"name": "DepartmentCSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dsDataflowOutputCSV",
+						"type": "DatasetReference"
+					},
+					"name": "EmpWithDepatName"
+				},
+				{
+					"dataset": {
+						"referenceName": "dsDataflowOutputCSV",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "InnerJoin"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filterFor"
+				},
+				{
+					"name": "AggregateOnDept"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Id as string,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          Salary as string,",
+				"          DeptID as string,",
+				"          ManagerID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EmployeeCSV",
+				"source(output(",
+				"          DeptID as string,",
+				"          DeptName as string,",
+				"          Location as string,",
+				"          DeptHead as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> DepartmentCSV",
+				"derivedColumn1, DepartmentCSV join(EmployeeCSV@DeptID == DepartmentCSV@DeptID,",
+				"     joinType:'inner',",
+				"     broadcast: 'auto')~> InnerJoin",
+				"EmployeeCSV derive(FirstName = left(Name,locate(' ',Name)-1),",
+				"          LastName = right(Name,length(Name)-locate(' ',Name))) ~> derivedColumn1",
+				"InnerJoin filter(equals(DeptName,'Finance') || equals(DeptName,'HR')) ~> filterFor",
+				"filterFor aggregate(groupBy(DeptName),",
+				"     NoOfEmployees = count(Id)) ~> AggregateOnDept",
+				"InnerJoin sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['EmpDept.CSV'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Id,",
+				"          FirstName,",
+				"          LastName,",
+				"          Salary,",
+				"          DeptName",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> EmpWithDepatName",
+				"AggregateOnDept sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['EmployeesByDeptName'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          DeptName,",
+				"          NoOfEmployees",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

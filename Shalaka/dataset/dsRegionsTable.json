@@ -1,0 +1,36 @@
+{
+	"name": "dsRegionsTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lnSqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "SrNo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PersonId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PersonName",
+				"type": "varchar"
+			},
+			{
+				"name": "RegionName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "regions"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

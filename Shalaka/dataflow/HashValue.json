@@ -1,0 +1,92 @@
+{
+	"name": "HashValue",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dsCarsAdls",
+						"type": "DatasetReference"
+					},
+					"name": "SourceCarsCSV"
+				},
+				{
+					"dataset": {
+						"referenceName": "dsAzureSqlTable",
+						"type": "DatasetReference"
+					},
+					"name": "TargetCarsTable"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dsAzureSqlTable",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "HashKeySource"
+				},
+				{
+					"name": "HashKeyTarget"
+				},
+				{
+					"name": "exists1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Car as string,",
+				"          Make as integer,",
+				"          Mileage as integer,",
+				"          Seater as integer",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceCarsCSV",
+				"source(output(",
+				"          Car as string,",
+				"          Make as integer,",
+				"          Seater as integer,",
+				"          Mileage as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> TargetCarsTable",
+				"SourceCarsCSV derive(HashKey = sha2(256,columns())) ~> HashKeySource",
+				"TargetCarsTable derive(HashKeyTarget = sha2(256,columns())) ~> HashKeyTarget",
+				"HashKeySource, HashKeyTarget exists(HashKey == HashKeyTarget,",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
+				"exists1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Car as string,",
+				"          Make as integer,",
+				"          Seater as integer,",
+				"          Mileage as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          Car,",
+				"          Make,",
+				"          Seater,",
+				"          Mileage",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

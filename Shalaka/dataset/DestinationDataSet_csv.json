@@ -1,0 +1,24 @@
+{
+	"name": "DestinationDataSet_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_trial",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "cars.csv",
+				"folderPath": "output",
+				"container": "adftrial"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

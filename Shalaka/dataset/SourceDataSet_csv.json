@@ -1,0 +1,24 @@
+{
+	"name": "SourceDataSet_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_trial",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "text.csv",
+				"folderPath": "input",
+				"container": "adftrial"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

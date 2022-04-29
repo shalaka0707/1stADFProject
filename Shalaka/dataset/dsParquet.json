@@ -1,0 +1,39 @@
+{
+	"name": "dsParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lnADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Cars.parquet",
+				"folderPath": "Output",
+				"fileSystem": "adlscontainer"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Car",
+				"type": "UTF8"
+			},
+			{
+				"name": "Make",
+				"type": "UTF8"
+			},
+			{
+				"name": "Mileage",
+				"type": "UTF8"
+			},
+			{
+				"name": "Seater",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,39 @@
+{
+	"name": "lnErrorTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lnAzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SrNo",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "SaleDate",
+				"type": "varchar"
+			},
+			{
+				"name": "ProductNam",
+				"type": "varchar"
+			},
+			{
+				"name": "Qty",
+				"type": "varchar"
+			},
+			{
+				"name": "FileName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tblSalesDataBad"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

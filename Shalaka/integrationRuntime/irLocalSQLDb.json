@@ -1,0 +1,6 @@
+{
+	"name": "irLocalSQLDb",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"name": "ds_testVariableDest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_trial",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ds_FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().ds_FileName",
+					"type": "Expression"
+				},
+				"folderPath": "output",
+				"container": "adftrial"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,106 @@
+{
+	"name": "GoodDataBadData",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "dsErrorSalesFile",
+						"type": "DatasetReference"
+					},
+					"name": "errorSalesCSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "lnErrorTable",
+						"type": "DatasetReference"
+					},
+					"name": "uploadToErrorRecordTable"
+				},
+				{
+					"dataset": {
+						"referenceName": "dsGoodtable",
+						"type": "DatasetReference"
+					},
+					"name": "UploadtoGoodtable"
+				}
+			],
+			"transformations": [
+				{
+					"name": "conditionSplitForerrorRecords"
+				},
+				{
+					"name": "FileNameColumn"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          SrNo as short,",
+				"          SaleDate as string,",
+				"          ProductNam as string,",
+				"          Qty as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> errorSalesCSV",
+				"errorSalesCSV split(isNull(toDate(SaleDate,'dd-MMM-yyyy')),",
+				"     disjoint: false) ~> conditionSplitForerrorRecords@(errorrecords, GoodRecords)",
+				"conditionSplitForerrorRecords@errorrecords derive(FileName = 'Sales.csv') ~> FileNameColumn",
+				"conditionSplitForerrorRecords@GoodRecords derive(FileName = 'Sales.csv',",
+				"          SaleDate = toDate(SaleDate,'dd-MMM-yyyy')) ~> derivedColumn1",
+				"FileNameColumn sink(allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     input(",
+				"          SrNo as integer,",
+				"          SaleDate as string,",
+				"          ProductNam as string,",
+				"          Qty as string,",
+				"          FileName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          SrNo,",
+				"          SaleDate,",
+				"          ProductNam,",
+				"          Qty,",
+				"          FileName",
+				"     )) ~> uploadToErrorRecordTable",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          SrNo as integer,",
+				"          SaleDate as date,",
+				"          ProductNam as string,",
+				"          Qty as integer,",
+				"          FileName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          SrNo,",
+				"          SaleDate,",
+				"          ProductNam,",
+				"          Qty,",
+				"          FileName",
+				"     )) ~> UploadtoGoodtable"
+			]
+		}
+	}
+}

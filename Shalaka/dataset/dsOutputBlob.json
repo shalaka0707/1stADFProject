@@ -1,0 +1,27 @@
+{
+	"name": "dsOutputBlob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_trial",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"singleFolderName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "@dataset().singleFolderName",
+					"type": "Expression"
+				},
+				"container": "adftrial"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

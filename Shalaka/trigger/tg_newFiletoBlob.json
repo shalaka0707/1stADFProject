@@ -1,0 +1,28 @@
+{
+	"name": "tg_newFiletoBlob",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_testVariable",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"FileName": "@triggerBody().Filename"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/adftrial/blobs/input/",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/d31d381c-9e65-46da-92b7-da569278c903/resourceGroups/TrialStorageAccount/providers/Microsoft.Storage/storageAccounts/storageacct1204",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"name": "dsInputFolderText",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_trial",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Trial.txt",
+				"folderPath": "input",
+				"container": "adftrial"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
