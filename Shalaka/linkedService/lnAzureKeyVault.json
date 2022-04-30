@@ -1,0 +1,10 @@
+{
+	"name": "lnAzureKeyVault",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv4databrick.vault.azure.net/"
+		}
+	}
+}
