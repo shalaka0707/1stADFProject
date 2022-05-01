@@ -1,0 +1,227 @@
+{
+	"name": "ds50columnsAdls",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "lnADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet3",
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "50columns.xlsx",
+				"folderPath": "input",
+				"fileSystem": "adlscontainer"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "No1",
+				"type": "String"
+			},
+			{
+				"name": "No2",
+				"type": "String"
+			},
+			{
+				"name": "No3",
+				"type": "String"
+			},
+			{
+				"name": "No4",
+				"type": "String"
+			},
+			{
+				"name": "No5",
+				"type": "String"
+			},
+			{
+				"name": "No6",
+				"type": "String"
+			},
+			{
+				"name": "No7",
+				"type": "String"
+			},
+			{
+				"name": "No8",
+				"type": "String"
+			},
+			{
+				"name": "No9",
+				"type": "String"
+			},
+			{
+				"name": "No10",
+				"type": "String"
+			},
+			{
+				"name": "No11",
+				"type": "String"
+			},
+			{
+				"name": "No12",
+				"type": "String"
+			},
+			{
+				"name": "No13",
+				"type": "String"
+			},
+			{
+				"name": "No14",
+				"type": "String"
+			},
+			{
+				"name": "No15",
+				"type": "String"
+			},
+			{
+				"name": "No16",
+				"type": "String"
+			},
+			{
+				"name": "No17",
+				"type": "String"
+			},
+			{
+				"name": "No18",
+				"type": "String"
+			},
+			{
+				"name": "No19",
+				"type": "String"
+			},
+			{
+				"name": "No20",
+				"type": "String"
+			},
+			{
+				"name": "No21",
+				"type": "String"
+			},
+			{
+				"name": "No22",
+				"type": "String"
+			},
+			{
+				"name": "No23",
+				"type": "String"
+			},
+			{
+				"name": "No24",
+				"type": "String"
+			},
+			{
+				"name": "No25",
+				"type": "String"
+			},
+			{
+				"name": "No26",
+				"type": "String"
+			},
+			{
+				"name": "No27",
+				"type": "String"
+			},
+			{
+				"name": "No28",
+				"type": "String"
+			},
+			{
+				"name": "No29",
+				"type": "String"
+			},
+			{
+				"name": "No30",
+				"type": "String"
+			},
+			{
+				"name": "No31",
+				"type": "String"
+			},
+			{
+				"name": "No32",
+				"type": "String"
+			},
+			{
+				"name": "No33",
+				"type": "String"
+			},
+			{
+				"name": "No34",
+				"type": "String"
+			},
+			{
+				"name": "No35",
+				"type": "String"
+			},
+			{
+				"name": "No36",
+				"type": "String"
+			},
+			{
+				"name": "No37",
+				"type": "String"
+			},
+			{
+				"name": "No38",
+				"type": "String"
+			},
+			{
+				"name": "No39",
+				"type": "String"
+			},
+			{
+				"name": "No40",
+				"type": "String"
+			},
+			{
+				"name": "No41",
+				"type": "String"
+			},
+			{
+				"name": "No42",
+				"type": "String"
+			},
+			{
+				"name": "No43",
+				"type": "String"
+			},
+			{
+				"name": "No44",
+				"type": "String"
+			},
+			{
+				"name": "No45",
+				"type": "String"
+			},
+			{
+				"name": "No46",
+				"type": "String"
+			},
+			{
+				"name": "No47",
+				"type": "String"
+			},
+			{
+				"name": "No48",
+				"type": "String"
+			},
+			{
+				"name": "No49",
+				"type": "String"
+			},
+			{
+				"name": "No50",
+				"type": "String"
+			},
+			{
+				"name": "No51",
+				"type": "String"
+			}
+		]
+	}
+}
