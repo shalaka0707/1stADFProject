@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Trial.txt",
+				"fileName": "trial.txt",
 				"folderPath": "input",
 				"container": "adftrial"
 			}

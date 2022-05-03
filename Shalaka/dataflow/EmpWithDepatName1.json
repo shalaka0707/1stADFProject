@@ -1,0 +1,64 @@
+{
+	"name": "EmpWithDepatName1",
+	"properties": {
+		"type": "Flowlet",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "InnerJoin"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "filterFor"
+				},
+				{
+					"name": "AggregateOnDept"
+				},
+				{
+					"name": "EmployeeCSV"
+				},
+				{
+					"name": "DepartmentCSV"
+				},
+				{
+					"name": "EmpWithDepatName"
+				},
+				{
+					"name": "output1"
+				}
+			],
+			"scriptLines": [
+				"input(output(",
+				"          Id as string,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          Salary as string,",
+				"          DeptID as string,",
+				"          ManagerID as string",
+				"     ),",
+				"     order: 0) ~> EmployeeCSV",
+				"input(output(",
+				"          DeptID as string,",
+				"          DeptName as string,",
+				"          Location as string,",
+				"          DeptHead as string",
+				"     ),",
+				"     order: 1) ~> DepartmentCSV",
+				"derivedColumn1, DepartmentCSV join(EmployeeCSV@DeptID == DepartmentCSV@DeptID,",
+				"     joinType:'inner',",
+				"     broadcast: 'auto')~> InnerJoin",
+				"EmployeeCSV derive(FirstName = left(Name,locate(' ',Name)-1),",
+				"          LastName = right(Name,length(Name)-locate(' ',Name))) ~> derivedColumn1",
+				"InnerJoin filter(equals(DeptName,'Finance') || equals(DeptName,'HR')) ~> filterFor",
+				"filterFor aggregate(groupBy(DeptName),",
+				"     NoOfEmployees = count(Id)) ~> AggregateOnDept",
+				"InnerJoin output() ~> EmpWithDepatName",
+				"AggregateOnDept output() ~> output1"
+			]
+		}
+	}
+}
