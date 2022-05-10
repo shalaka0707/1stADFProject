@@ -98,7 +98,7 @@
 							}
 						},
 						{
-							"name": "Set variable1",
+							"name": "AppendedValuesToAnotherArray",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
