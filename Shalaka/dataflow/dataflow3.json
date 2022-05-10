@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source2"
+				},
+				{
+					"linkedService": {
+						"referenceName": "lnDelta",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source3"
 				}
 			],
 			"sinks": [
@@ -33,11 +40,24 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
+				"source(output(",
+				"          Id as string,",
+				"          Name as string,",
+				"          Gender as string,",
+				"          Salary as string,",
+				"          Departmemt as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delta',",
+				"     fileSystem: 'adlscontainer',",
+				"     folderPath: 'Output') ~> source3",
 				"source2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'delta',",
 				"     fileSystem: 'adlscontainer',",
-				"     folderPath: 'Output',",
+				"     folderPath: 'Output/employeedelta',",
 				"     mergeSchema: false,",
 				"     autoCompact: false,",
 				"     optimizedWrite: false,",
